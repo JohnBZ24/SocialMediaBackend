@@ -18,16 +18,17 @@ class userController {
   }
   static async findAll(req, res) {
     try {
-      const user = userService.findAll();
-      res.status(200).json(user, { messgae: " here all the user's" });
+      const users = await userService.findAll();
+      res.status(200).json({ users, message: " here all the user's" });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   }
   static async deleteUser(req, res) {
     try {
-      const { userId } = req.body;
-      const user = await userService.deleteUser(userId);
+      const authHeader = req.headers["authorization"];
+      const { _id } = req.body;
+      const user = await userService.deleteUser(_id, authHeader);
       res.status(200).json(user);
     } catch (error) {
       res.status(400).json({ message: error.message });

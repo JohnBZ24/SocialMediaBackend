@@ -5,7 +5,7 @@ import pkg from "jsonwebtoken";
 const { verify } = pkg;
 class userService {
   static async findOne(firstName, lastName, email, authHeader) {
-    const user = userModel.findOne({ firstName, lastName, email });
+    const user = await userModel.findOne({ firstName, lastName, email });
     if (!user) {
       return null;
     }
@@ -15,7 +15,6 @@ class userService {
   }
 
   static async verifyToken(authHeader) {
-    //change name to verify token
     const token = authHeader.split(" ")[1];
     const payload = verify(token, "miniSocialMediaBackend");
     if (!payload) {
@@ -24,11 +23,15 @@ class userService {
     return payload;
   }
   static async findAll() {
-    const users = await userModel.find();
-    return users;
+    return userModel.find();
   }
-  static async deleteUser(userId) {
-    const deleteUser = await userModel.deleteOne({ _id: userId });
+  // to ask : if we have a valid id and a valid token but not for the same user why it would'nt delete it and how
+  static async deleteUser(_id, authHeader) {
+    const token = this.verifyToken(authHeader);
+    if (!token) {
+      return null;
+    }
+    const deleteUser = await userModel.deleteOne({ _id });
     return deleteUser;
   }
 }
