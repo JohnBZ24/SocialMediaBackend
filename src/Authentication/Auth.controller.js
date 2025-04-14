@@ -19,7 +19,7 @@ class authController {
     try {
       const { email, password } = req.body;
       if (password != undefined && email != undefined) {
-        let auth = await authService.login(email, password);
+        let auth = await authService.Login(email, password);
         res.status(200).json({ auth, message: " User found" });
       } else {
         throw new Error(" missing email or password");

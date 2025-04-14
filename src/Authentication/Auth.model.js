@@ -1,6 +1,6 @@
-import mongoose from "mangoose";
-const { schema } = mongoose;
-const authschema = new schema({
+import mongoose from "mongoose";
+const { Schema } = mongoose;
+const authschema = new Schema({
   email: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
