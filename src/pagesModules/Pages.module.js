@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import post from "../postModule/post.model.js";
+
 const { Schema } = mongoose;
 const pageschema = new Schema({
-  post: { type: [post], required: false, unique: true },
-  ownerpassword: { type: String, required: true },
-  email: { type: String, required: true },});
+  bio: { type: String, required: false },
+  description: { type: String, required: false },
+  userId: { type: String, required: true, unique: false },
+});
 export default mongoose.model("page", pageschema);

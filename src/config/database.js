@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-const DB_HOST = "localhost";
-const DB_PORT = 27017;
-const DB_NAME = "miniSocialMediaBackEnd";
-const connectionString = `mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+import dotenv from "dotenv";
+dotenv.config();
+
+const connectionString = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 export const connect = () => {
+  console.log(connectionString);
   mongoose
     .connect(connectionString, {
       useNewUrlParser: true,

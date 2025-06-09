@@ -1,17 +1,17 @@
+import sendresponse from "../../util/sendresponse.js";
 import authService from "./Auth.services.js";
+//import * as authException from "./auth.error.js";
+import { signUpUserSchema } from "./user.validation.js";
+import { validate } from "../../util/joi/validator.js";
+
 class authController {
   static async register(req, res) {
     try {
-      const { email, firstName, lastName, password } = req.body;
-      let auth = await authService.register(
-        email,
-        firstName,
-        lastName,
-        password
-      );
-      res.status(200).json({ auth, return: "user created succesfully" });
+      const data = validate(signUpUserSchema, req.body);
+      let auth = await authService.register(data);
+      return sendresponse(res, { status: 201, message: "created", data: auth });
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(error.statusCode).json({ message: error.message });
     }
   }
 

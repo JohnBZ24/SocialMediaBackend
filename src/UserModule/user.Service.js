@@ -1,5 +1,5 @@
 import userModel from "../Authentication/Auth.model.js";
-import AuthService from "../Authentication/Auth.services.js";
+//import AuthService from "../Authentication/Auth.services.js";
 
 import pkg from "jsonwebtoken";
 const { verify } = pkg;
@@ -22,6 +22,7 @@ class userService {
     }
     return payload;
   }
+
   static async findAll() {
     return userModel.find();
   }
